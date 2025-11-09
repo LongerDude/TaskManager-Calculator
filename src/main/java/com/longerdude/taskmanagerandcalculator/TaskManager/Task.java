@@ -9,6 +9,7 @@ public class Task {
         this.name = name;
         this.description = description;
     }
+
     public String getName() {
         return name;
     }

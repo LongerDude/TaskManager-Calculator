@@ -4,10 +4,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 import javafx.scene.control.*;
 
 public class TaskCollection {
@@ -26,7 +23,10 @@ public class TaskCollection {
         this.tasks.putIfAbsent(date, new ArrayList<>());
         this.tasks.get(date).add(task);
         this.treeRoot.putIfAbsent(date, new TreeItem<>(date));
-        this.treeRoot.get(date).getChildren().add(new TreeItem(task.getName()));
+        TreeItem<String> taskDescription = new TreeItem<>(task.getDescription());
+        TreeItem taskName = new TreeItem<>(task.getName());
+        taskName.getChildren().add(taskDescription);
+        this.treeRoot.get(date).getChildren().add(taskName);
     }
 
     public TreeItem<LocalDate> getTreeRoot(LocalDate date) {
@@ -78,6 +78,42 @@ public class TaskCollection {
         }
     }
 
+    public void remove(Object object){
 
+        if (object instanceof LocalDate) {
+            this.tasks.remove((LocalDate) object);
+
+            //this.treeRoot.get((LocalDate)object).getChildren().remove(object);
+
+        }
+        if (object instanceof String){
+            for (ArrayList<Task> tasksForDate : this.tasks.values()) {
+                Iterator<Task> iterator = tasksForDate.iterator();
+                while (iterator.hasNext()){
+                    Task task = iterator.next();
+                    if (task.getName().equals((String) object)){
+                        iterator.remove();
+                    }
+
+                }
+                //for (Task task : tasksForDate) {
+                  //  if (task.getName().equals((String) object)){
+                    //    tasksForDate.remove(task);
+                      //  break;
+                    //}
+                //}
+
+            }
+
+
+        }
+    }
 
 }
+
+
+
+
+
+
+

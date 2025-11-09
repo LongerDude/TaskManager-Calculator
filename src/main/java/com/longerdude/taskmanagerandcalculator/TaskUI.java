@@ -2,6 +2,7 @@ package com.longerdude.taskmanagerandcalculator;
 
 import com.longerdude.taskmanagerandcalculator.TaskManager.Task;
 import com.longerdude.taskmanagerandcalculator.TaskManager.TaskCollection;
+import com.sun.source.tree.Tree;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -31,13 +32,18 @@ public class TaskUI extends Application {
 
         // Components for the UPPER Task Manager
         Button addTaskButton = new Button("Add Task");
+        Button removeTaskButton = new Button("Remove Task");
         DatePicker datePicker = new DatePicker();
         TextField taskName = new TextField("Task Name");
         TextArea taskDescription = new TextArea("Task Description");
 
         // Layout configuration for the Task Manager
         VBox taskManagerButtons = new VBox();
-        taskManagerButtons.getChildren().addAll(addTaskButton, datePicker,taskName,taskDescription);
+        HBox taskButtons = new HBox();
+        taskButtons.setAlignment(Pos.CENTER);
+        taskButtons.setSpacing(130);
+        taskButtons.getChildren().addAll(addTaskButton,removeTaskButton);
+        taskManagerButtons.getChildren().addAll(taskButtons, datePicker,taskName,taskDescription);
         taskManagerLayout.setTop(taskManagerButtons);
 
         // Components for the LOWER Task Manager
@@ -58,6 +64,18 @@ public class TaskUI extends Application {
                 rootItem.getChildren().add(taskCollection.getTreeRoot(datePicker.getValue()));
             }
         });
+
+        treeView.setOnMouseClicked(event -> {
+            TreeItem item =(TreeItem) treeView.getSelectionModel().getSelectedItem();
+            removeTaskButton.setOnAction(event2 -> {
+                TreeItem parent = item.getParent();
+                parent.getChildren().remove(item);
+                taskCollection.remove(item.getValue());
+
+            });
+
+        });
+
 
 
         taskManagerLayout.setCenter(treeView);
