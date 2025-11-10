@@ -1,9 +1,8 @@
 package com.longerdude.taskmanagerandcalculator;
 
-import com.longerdude.taskmanagerandcalculator.TaskManager.Calculator;
+import com.longerdude.taskmanagerandcalculator.Calculator.Calculator;
 import com.longerdude.taskmanagerandcalculator.TaskManager.Task;
 import com.longerdude.taskmanagerandcalculator.TaskManager.TaskCollection;
-import com.sun.source.tree.Tree;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -62,10 +61,12 @@ public class TaskUI extends Application {
         taskCollection.load(rootItem);
 
         //Add Task Button logic
+
         addTaskButton.setOnAction(event -> {
             Task task = new Task(taskName.getText(),taskDescription.getText());
             taskCollection.addTask(task, datePicker.getValue());
             if (!(rootItem.getChildren().contains(taskCollection.getTreeRoot(datePicker.getValue())))) {
+
                 rootItem.getChildren().add(taskCollection.getTreeRoot(datePicker.getValue()));
             }
         });
