@@ -30,24 +30,31 @@ public class TaskUI extends Application {
         hBox.getChildren().addAll(tasksButton,calculationButton);
         hBox.setAlignment(Pos.CENTER);
 
+
         // Main layout for calculator and Task Manager
         BorderPane calculatorLayout = new BorderPane();
         BorderPane taskManagerLayout = new BorderPane();
 
         // Components for the UPPER Task Manager
+        HBox testing = new HBox();
+
         Button addTaskButton = new Button("Add Task");
         Button removeTaskButton = new Button("Remove Task");
         DatePicker datePicker = new DatePicker();
-        TextField taskName = new TextField("Task Name");
-        TextArea taskDescription = new TextArea("Task Description");
+        datePicker.setPromptText("Date");
+        testing.getChildren().addAll(addTaskButton,datePicker,removeTaskButton);
+        TextField taskName = new TextField("");
+        taskName.setPromptText("Task Name");
+        TextArea taskDescription = new TextArea("");
+        taskDescription.setPromptText("Task Description");
 
         // Layout configuration for the Task Manager
         VBox taskManagerButtons = new VBox();
         HBox taskButtons = new HBox();
-        taskButtons.setAlignment(Pos.CENTER);
-        taskButtons.setSpacing(130);
-        taskButtons.getChildren().addAll(addTaskButton,removeTaskButton);
-        taskManagerButtons.getChildren().addAll(taskButtons, datePicker,taskName,taskDescription);
+        //taskButtons.setAlignment(Pos.CENTER);
+        //taskButtons.setSpacing(130);
+        //taskButtons.getChildren().addAll(addTaskButton,removeTaskButton);
+        taskManagerButtons.getChildren().addAll(testing,taskName,taskDescription);
         taskManagerLayout.setTop(taskManagerButtons);
 
         // Components for the LOWER Task Manager
@@ -84,6 +91,7 @@ public class TaskUI extends Application {
 
 
         taskManagerLayout.setCenter(treeView);
+        hBox.autosize();
         layout.setTop(hBox);
         layout.setCenter(taskManagerLayout);
         tasksButton.setOnAction(event -> {layout.setCenter(taskManagerLayout);
@@ -115,7 +123,7 @@ public class TaskUI extends Application {
         calculationButton.setOnAction(event -> {layout.setCenter(calculatorLayout);
             window.sizeToScene();});
 
-        Scene scene = new Scene(layout);
+        Scene scene = new Scene(layout,365,440);
         window.setScene(scene);
 
         window.show();
